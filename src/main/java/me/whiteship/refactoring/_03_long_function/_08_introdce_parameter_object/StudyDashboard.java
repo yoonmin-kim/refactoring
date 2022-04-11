@@ -1,10 +1,5 @@
 package me.whiteship.refactoring._03_long_function._08_introdce_parameter_object;
 
-import org.kohsuke.github.GHIssue;
-import org.kohsuke.github.GHIssueComment;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +9,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueComment;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 
 public class StudyDashboard {
 
@@ -72,22 +72,23 @@ public class StudyDashboard {
             writer.print(header(totalNumberOfEvents, participants.size()));
 
             participants.forEach(p -> {
-                String markdownForHomework = getMarkdownForParticipant(totalNumberOfEvents, p);
+                String markdownForHomework = getMarkdownForParticipant(new ParticipantPrinter(totalNumberOfEvents, p));
                 writer.print(markdownForHomework);
             });
         }
     }
 
-    private double getRate(int totalNumberOfEvents, Participant p) {
-        long count = p.homework().values().stream()
+    private double getRate(ParticipantPrinter participantPrinter) {
+        long count = participantPrinter.getP().homework().values().stream()
                 .filter(v -> v == true)
                 .count();
-        double rate = count * 100 / totalNumberOfEvents;
+        double rate = count * 100 / participantPrinter.getTotalNumberOfEvents();
         return rate;
     }
 
-    private String getMarkdownForParticipant(int totalNumberOfEvents, Participant p) {
-        return String.format("| %s %s | %.2f%% |\n", p.username(), checkMark(p, totalNumberOfEvents), getRate(totalNumberOfEvents, p));
+    private String getMarkdownForParticipant(ParticipantPrinter participantPrinter) {
+        return String.format("| %s %s | %.2f%% |\n", participantPrinter.getP().username(), checkMark(
+            participantPrinter.getP(), participantPrinter.getTotalNumberOfEvents()), getRate(participantPrinter));
     }
 
     /**
