@@ -6,10 +6,17 @@ public class Bill {
 
     private GasUsage gasUsage;
 
-    public double calculateBill() {
-        var electicityBill = electricityUsage.getAmount() * electricityUsage.getPricePerUnit();
-        var gasBill = gasUsage.getAmount() * gasUsage.getPricePerUnit();
-        return electicityBill + gasBill;
+    public Bill(ElectricityUsage electricityUsage, GasUsage gasUsage) {
+        this.electricityUsage = electricityUsage;
+        this.gasUsage = gasUsage;
     }
+
+    public double calculateBill() {
+        return electricityUsage.getElectricityBill() + gasUsage.getGasBill();
+    }
+
+
+
+
 
 }
