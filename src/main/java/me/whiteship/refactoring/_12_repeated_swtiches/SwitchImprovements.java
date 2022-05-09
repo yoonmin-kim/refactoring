@@ -12,4 +12,22 @@ public class SwitchImprovements {
         }
         return result;
     }
+
+    public int vacationHours2(String type) {
+        return switch (type) {
+            case "full-time": yield 120;
+            case "part-time": yield 80;
+            case "temporal": yield 32;
+            default: yield 0;
+        };
+    }
+
+    public int vacationHours3(String type) {
+        return switch (type) {
+            case "full-time" -> 120;
+            case "part-time" -> 80;
+            case "temporal" -> 32;
+            default ->  0;
+        };
+    }
 }
