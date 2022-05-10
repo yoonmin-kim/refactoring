@@ -1,10 +1,10 @@
 package me.whiteship.refactoring._13_loop._33_replace_loop_with_pipeline;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class AuthorTest {
 
@@ -13,6 +13,7 @@ class AuthorTest {
         Author keesun = new Author("ms", null);
         Author whiteship = new Author("naver", "whiteship");
         assertEquals(List.of("whiteship"), Author.TwitterHandles(List.of(keesun, whiteship), "naver"));
+        assertEquals(List.of("whiteship"), Author.TwitterHandlesStream(List.of(keesun, whiteship), "naver"));
     }
 
 }
