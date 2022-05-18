@@ -10,6 +10,7 @@ public class Ticket {
 
     public Ticket(LocalDate purchasedDate, boolean prime) {
         this.purchasedDate = purchasedDate;
+
         this.prime = prime;
     }
 
@@ -19,5 +20,10 @@ public class Ticket {
 
     public boolean isPrime() {
         return prime;
+    }
+
+    public boolean isFastPass() {
+        LocalDate earlyBirdDate = LocalDate.of(2022, 1, 1);
+        return isPrime() && getPurchasedDate().isBefore(earlyBirdDate);
     }
 }
